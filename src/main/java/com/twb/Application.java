@@ -20,10 +20,8 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import java.util.Map;
 
 @SpringBootApplication
-public class Application /*implements CommandLineRunner */{
+public class Application implements CommandLineRunner {
 
-//    @Autowired
-//    private ElasticsearchOperations es;
 
     @Autowired
     private BookService bookService;
@@ -32,37 +30,22 @@ public class Application /*implements CommandLineRunner */{
         SpringApplication.run(Application.class, args);
     }
 
-//    @Override
-//    public void run(String... args) throws Exception {
-//
-////        printElasticSearchInfo();
-//
-//        bookService.save(new Book("1001", "Elasticsearch Basics", "Rambabu Posa", "23-FEB-2017"));
-//        bookService.save(new Book("1002", "Apache Lucene Basics", "Rambabu Posa", "13-MAR-2017"));
-//        bookService.save(new Book("1003", "Apache Solr Basics", "Rambabu Posa", "21-MAR-2017"));
-//
-//        //fuzzey search
-//        Page<Book> books = bookService.findByAuthor("Rambabu", PageRequest.of(0, 10));
-//
-//        //List<Book> books = bookService.findByTitle("Elasticsearch Basics");
-//
-//        books.forEach(x -> System.out.println(x));
-//
-//
-//    }
+    @Override
+    public void run(String... args) throws Exception {
 
-    //useful for debug
-//    private void printElasticSearchInfo() {
-//
-//        System.out.println("--ElasticSearch-->");
-//        Client client = es.getClient();
-//        Map<String, String> asMap = client.settings().getAsMap();
-//
-//        asMap.forEach((k, v) -> {
-//            System.out.println(k + " = " + v);
-//        });
-//        System.out.println("<--ElasticSearch--");
-//    }
+        bookService.save(new Book("1001", "Elasticsearch Basics", "Rambabu Posa", "23-FEB-2017"));
+        bookService.save(new Book("1002", "Apache Lucene Basics", "Rambabu Posa", "13-MAR-2017"));
+        bookService.save(new Book("1003", "Apache Solr Basics", "Rambabu Posa", "21-MAR-2017"));
+
+        //fuzzey search
+        Page<Book> books = bookService.findByAuthor("Rambabu", PageRequest.of(0, 10));
+
+        //List<Book> books = bookService.findByTitle("Elasticsearch Basics");
+
+        books.forEach(x -> System.out.println(x));
+
+
+    }
 
     @Bean
     public boolean createTestIndex(RestHighLevelClient restHighLevelClient) throws Exception {
