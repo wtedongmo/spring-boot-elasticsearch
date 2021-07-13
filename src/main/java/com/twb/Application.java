@@ -1,6 +1,8 @@
 package com.twb;
 
+import com.twb.book.model.Author;
 import com.twb.book.model.Book;
+import com.twb.book.repository.AuthorRepository;
 import com.twb.book.service.BookService;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.client.Client;
@@ -25,6 +27,8 @@ public class Application implements CommandLineRunner {
 
     @Autowired
     private BookService bookService;
+    @Autowired
+    private AuthorRepository authorRepository;
 
     public static void main(String args[]) {
         SpringApplication.run(Application.class, args);
@@ -33,9 +37,12 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        bookService.save(new Book("1001", "Elasticsearch Basics", "Rambabu Posa", "23-FEB-2017"));
-        bookService.save(new Book("1002", "Apache Lucene Basics", "Rambabu Posa", "13-MAR-2017"));
-        bookService.save(new Book("1003", "Apache Solr Basics", "Rambabu Posa", "21-MAR-2017"));
+        Author author = new Author("101", "Rambabu", "Yde");
+        authorRepository.save(author);
+
+        bookService.save(new Book("1004", "Elasticsearch Basics", "Rambabu Posa", "23-FEB-2017", author));
+        bookService.save(new Book("1005", "Apache Lucene Basics", "Rambabu Posa", "13-MAR-2017", author));
+        bookService.save(new Book("1006", "Apache Solr Basics", "Rambabu Posa", "21-MAR-2017", author));
 
         //fuzzey search
         Page<Book> books = bookService.findByAuthor("Rambabu", PageRequest.of(0, 10));

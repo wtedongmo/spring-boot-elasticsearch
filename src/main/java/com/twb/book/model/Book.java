@@ -3,6 +3,8 @@ package com.twb.book.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import javax.persistence.ManyToOne;
+
 @Document(indexName = "twb", type = "books")
 public class Book {
 
@@ -15,6 +17,9 @@ public class Book {
 
     private String releaseDate;
 
+    @ManyToOne
+    private Author authors;
+
     public Book() {
     }
 
@@ -23,6 +28,14 @@ public class Book {
         this.title = title;
         this.author = author;
         this.releaseDate = releaseDate;
+    }
+
+    public Book(String id, String title, String author, String releaseDate, Author authors) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.releaseDate = releaseDate;
+        this.authors = authors;
     }
 
     public String getId() {
@@ -55,6 +68,14 @@ public class Book {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public Author getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Author authors) {
+        this.authors = authors;
     }
 
     @Override
